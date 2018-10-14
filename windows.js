@@ -56,7 +56,7 @@ function Window() {
     var _w = document.createElement('div'); _w.className = 'windowWindow'; _w.id = 'windowWindow';
     _w.innerHTML = 
             "<div class=\"windowTitle\">"+
-                "<div class=\"windowBClose\" title=\"Закрыть окно\">X</div>"+
+            "<div class=\"windowBClose\" title=\"{{ lib_windows.close_window }}\">X</div>"+
                 "<div class=\"windowTitleText\"></div>"+
                 "</div>";
     _w.style.position = "fixed";
@@ -73,7 +73,7 @@ function Window() {
                 class_title: null,
                 class_body: null,
                 class_window: null,
-                text_title: 'Без названия',
+                text_title: '{{ lib_windows.without_name }}',
                 body_content: undefined,
                 body_content_url: undefined
     };
@@ -91,7 +91,7 @@ function Window() {
             wbody.className = 'windowBody';
         }
 
-        if (!wbody.classList.contains('windowBody')) {wbody.classList.add('windowBody'); console.log('У тела окна должен быть установлен класс "windowBody"! Проверьте имя класса у тела с id = "'+idBody+'"!');}
+        if (!wbody.classList.contains('windowBody')) {wbody.classList.add('windowBody'); console.log('{{ lib_windows.windowBody_is_missing }}"'+idBody+'"!');}
         if (replaceContentBody !== undefined) wbody.innerHTML = replaceContentBody; 
         w.appendChild(wbody);
         w.querySelector(".windowBClose").addEventListener('click', function(e) {self.close(e.target)});
@@ -296,7 +296,7 @@ function AdvancedWindow() {
         
         this.open_by_api = function(api, options) {
                 options = options || [];
-                options['body_content'] = 'Загрузка...';
+                options['body_content'] = '{{ lib_windows.loading }}';
         options['data'] = options['data'] || {};
                 var text_title = options['text_title'];
                 var w = self.open(api, options);

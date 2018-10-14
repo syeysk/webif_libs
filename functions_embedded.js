@@ -68,9 +68,9 @@ function RA_raw(action, data, options) {
                   if (res['content']) options['content_tag'].innerHTML = res['content'];
                   
                   } else if (!navigator.onLine) {
-                      if (options['func_fatal']) options['func_fatal']('Нет соединения с Интернет');
+                      if (options['func_fatal']) options['func_fatal']('{{ lib_functions_embedded.no_connection }}');
                   } else {
-                      if (options['func_fatal']) options['func_fatal']('Неизветсная ошибка');
+                      if (options['func_fatal']) options['func_fatal']('{{ lib_functions_embedded.unknown_error }}');
                   }
     });
 }
@@ -121,7 +121,7 @@ function light_absent_fields(form, absent_fields) {
 }
 
 function RA_ButtonProgress(action, data, button, sending_text, func_success, options) {
-    sending_text = sending_text || "Отправляется...";
+    sending_text = sending_text || "{{ lib_functions_embedded.sending }}";
     show_button_message(button, sending_text)
     options = options || [];
     
@@ -139,7 +139,7 @@ function RA_ButtonProgress(action, data, button, sending_text, func_success, opt
            if (options['func_error']) options['func_error'](res, options['arg_func_error']);
         },
         func_fatal: function(res) {
-            show_button_message(button, 'неизвестная ошибка(');
+            show_button_message(button, '{{ lib_functions_embedded.unknown_error }}');
         },
         url: options['url'],
         func_after: options['func_after'],
@@ -167,7 +167,7 @@ function showNotification(message, _type, time) {
 }
 
 function RA_Notification(action, data, func_success, options) {
-    options.sending_text = options.sending_text || "Отправляется...";
+    options.sending_text = options.sending_text || "{{ lib_functions_embedded.sending }}";
     showNotification(options.sending_text, 'note', 2000);
     
     RA_raw(action, data, {
@@ -181,7 +181,7 @@ function RA_Notification(action, data, func_success, options) {
             showNotification('ошибка сервера: '+res['message'], 'error', timeout);
         },
         func_fatal: function(res) {
-            showNotification('неизвестная ошибка(', 'error');
+            showNotification('{{ lib_functions_embedded.unknown_error }}', 'error');
         },
         url: options['url'],
         func_after: options['func_after']
@@ -255,7 +255,7 @@ function sendform(button, action, options) {
     // отсылаем данные на сервер
     if (typeof is_true == 'string') is_true = [is_true];
     if (options['answer_type'] == 'ButtonProgress') {
-        if (is_true === true) RA_ButtonProgress(action, fields, button, 'Отправляем...', options['func_success'], options);
+        if (is_true === true) RA_ButtonProgress(action, fields, button, '{{ lib_functions_embedded.sending }}', options['func_success'], options);
         else show_button_message(button, is_true.join('<br>'));
     } else if (options['answer_type'] == 'Notification') {
         if (is_true === true) RA_Notification(action, fields, options['func_success'], options);
